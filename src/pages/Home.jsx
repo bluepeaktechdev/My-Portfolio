@@ -1,5 +1,6 @@
 import React from "react";
 import { Typewriter } from "react-simple-typewriter";
+import { motion } from "framer-motion";
 import mainImage from "../assets/my1.jpg";
 
 const Home = () => {
@@ -52,16 +53,48 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Right */}
+        {/* Right – Animated Image */}
         <div className="flex justify-center">
-          <div className="relative">
-            <div className="absolute -inset-4 bg-blue-600/30 rounded-full blur-3xl"></div>
-            <img
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 40 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: [0, -12, 0], // floating
+            }}
+            transition={{
+              opacity: { duration: 0.8, ease: "easeOut" },
+              scale: { duration: 0.8, ease: "easeOut" },
+              y: {
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            }}
+            className="relative"
+          >
+            {/* Glow */}
+            <motion.div
+              animate={{
+                opacity: [0.3, 0.6, 0.3],
+                scale: [1, 1.15, 1],
+              }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute -inset-6 bg-blue-600/30 rounded-full blur-3xl"
+            />
+
+            <motion.img
               src={mainImage}
               alt="Amao Ololade Yusuff"
-              className="relative w-72 h-72 md:w-80 md:h-80 object-cover rounded-full border-4 border-yellow-400 shadow-xl"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 120 }}
+              className="relative w-72 h-72 md:w-80 md:h-80 object-cover rounded-full border-4 border-yellow-400 shadow-2xl"
             />
-          </div>
+          </motion.div>
         </div>
 
       </div>

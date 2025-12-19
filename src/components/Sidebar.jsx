@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  MdMenu,
-  MdClose,
-  MdDownloadForOffline,
-  MdEmail,
-} from "react-icons/md";
+import { MdMenu, MdClose, MdDownloadForOffline, MdEmail } from "react-icons/md";
 import {
   FaGithub,
   FaLinkedin,
-  FaTwitter,
   FaFacebook,
   FaWhatsapp,
+  FaInstagram,
 } from "react-icons/fa";
 import BluePeak from "../assets/BluePeak.png";
+import MobileSocials from "./MobileSocials";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
 
   const links = [
     { name: "Home", to: "/" },
+    { name: "About", to: "/about" },
+    { name: "Vision", to: "/vision" },
     { name: "Services", to: "/services" },
     { name: "Portfolio", to: "/portfolio" },
     { name: "Contact", to: "/contact" },
@@ -29,9 +27,8 @@ const Sidebar = () => {
     <>
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex w-64 min-h-screen bg-slate-900 border-r border-blue-800 flex-col justify-between p-6">
-        {/* Top Section */}
+        {/* Top */}
         <div>
-          {/* Logo */}
           <div className="text-center">
             <div className="w-24 h-24 mx-auto rounded-2xl bg-blue-600 flex items-center justify-center mb-3 shadow-lg">
               <img
@@ -40,12 +37,8 @@ const Sidebar = () => {
                 className="w-16 h-16 object-contain"
               />
             </div>
-            <h2 className="text-white font-bold text-lg">
-              BluePeak Tech
-            </h2>
-            <p className="text-gray-400 text-sm">
-              Digital Solutions
-            </p>
+            <h2 className="text-white font-bold text-lg">BluePeak Tech</h2>
+            <p className="text-gray-400 text-sm">Digital Solutions</p>
           </div>
 
           {/* Navigation */}
@@ -68,73 +61,69 @@ const Sidebar = () => {
           </nav>
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom */}
         <div>
-          {/* Social Links */}
-          <div className="mt-10">
-            <p className="text-center text-xs uppercase tracking-widest text-gray-400 mb-4">
-              Connect with me here
-            </p>
+          <p className="text-center text-xs uppercase tracking-widest text-gray-400 mb-4">
+            Connect with me here
+          </p>
 
-            <div className="flex justify-center gap-4">
-              <a
-                href="https://github.com/yourusername"
-                target="_blank"
-                rel="noreferrer"
-                className="social-icon"
-              >
-                <FaGithub />
-              </a>
+          <div className="flex justify-center gap-4 mb-6">
+            <a
+              href="https://github.com/bluepeaktechdev"
+              target="_blank"
+              rel="noreferrer"
+              className="social-icon"
+            >
+              <FaGithub />
+            </a>
 
-              <a
-                href="https://linkedin.com/in/yourusername"
-                target="_blank"
-                rel="noreferrer"
-                className="social-icon"
-              >
-                <FaLinkedin />
-              </a>
+            <a
+              href="https://www.linkedin.com/in/bluepeak-tech-4141773a1/"
+              target="_blank"
+              rel="noreferrer"
+              className="social-icon"
+            >
+              <FaLinkedin />
+            </a>
 
-              <a
-                href="https://twitter.com/yourusername"
-                target="_blank"
-                rel="noreferrer"
-                className="social-icon"
-              >
-                <FaTwitter />
-              </a>
+            <a
+              href="https://www.instagram.com/bluepeaktech.dev/"
+              target="_blank"
+              rel="noreferrer"
+              className="social-icon"
+            >
+              <FaInstagram />
+            </a>
 
-              <a
-                href="https://www.facebook.com/amao.ololadeyusuff"
-                target="_blank"
-                rel="noreferrer"
-                className="social-icon"
-              >
-                <FaFacebook />
-              </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61575157475977"
+              target="_blank"
+              rel="noreferrer"
+              className="social-icon"
+            >
+              <FaFacebook />
+            </a>
 
-              <a
-                href="https://wa.me/2349028945149"
-                target="_blank"
-                rel="noreferrer"
-                className="social-icon whatsapp"
-              >
-                <FaWhatsapp />
-              </a>
+            <a
+              href="https://wa.me/2348149146262"
+              target="_blank"
+              rel="noreferrer"
+              className="social-icon whatsapp"
+            >
+              <FaWhatsapp />
+            </a>
 
-              <a
-                href="mailto:bluepeaktech.dev@gmail.com"
-                className="social-icon email"
-              >
-                <MdEmail />
-              </a>
-            </div>
+            <a
+              href="mailto:bluepeaktech.dev@gmail.com"
+              className="social-icon"
+            >
+              <MdEmail />
+            </a>
           </div>
 
-          {/* Download CV */}
           <a
             href="/cv.pdf"
-            className="mt-8 bg-yellow-400 hover:bg-yellow-300 text-slate-900 py-3 rounded-full flex items-center justify-center gap-2 font-semibold transition"
+            className="bg-yellow-400 hover:bg-yellow-300 text-slate-900 py-3 rounded-full flex items-center justify-center gap-2 font-semibold transition"
           >
             Download CV <MdDownloadForOffline size={20} />
           </a>
@@ -144,19 +133,10 @@ const Sidebar = () => {
       {/* Mobile Top Bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 border-b border-blue-800 p-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <img
-            src={BluePeak}
-            alt="Logo"
-            className="w-8 h-8 object-contain"
-          />
-          <span className="text-white font-bold text-lg">
-            BluePeak Tech
-          </span>
+          <img src={BluePeak} alt="Logo" className="w-8 h-8 object-contain" />
+          <span className="text-white font-bold text-lg">BluePeak Tech</span>
         </div>
-        <button
-          onClick={() => setOpen(!open)}
-          className="text-white text-2xl"
-        >
+        <button onClick={() => setOpen(!open)} className="text-white text-2xl">
           {open ? <MdClose /> : <MdMenu />}
         </button>
       </div>
@@ -182,13 +162,7 @@ const Sidebar = () => {
           ))}
 
           {/* Mobile Socials */}
-          <div className="flex justify-center gap-5 py-4">
-            <FaGithub className="text-gray-400 hover:text-yellow-400 text-xl transition" />
-            <FaLinkedin className="text-gray-400 hover:text-yellow-400 text-xl transition" />
-            <FaTwitter className="text-gray-400 hover:text-yellow-400 text-xl transition" />
-            <FaFacebook className="text-gray-400 hover:text-yellow-400 text-xl transition" />
-            <FaWhatsapp className="text-gray-400 hover:text-green-400 text-xl transition" />
-          </div>
+          <MobileSocials closeMenu={() => setOpen(false)} />
 
           <a
             href="/cv.pdf"
@@ -199,7 +173,7 @@ const Sidebar = () => {
         </div>
       )}
 
-      {/* Social Icon Styles */}
+      {/* Local Styles */}
       <style>{`
         .social-icon {
           width: 44px;
@@ -213,7 +187,6 @@ const Sidebar = () => {
           color: #93c5fd;
           font-size: 1.1rem;
           transition: all 0.35s ease;
-          box-shadow: 0 0 0 rgba(59, 130, 246, 0);
         }
 
         .social-icon:hover {

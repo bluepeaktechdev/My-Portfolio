@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import {
   FaLaptopCode,
   FaMobileAlt,
@@ -53,67 +54,149 @@ const services = [
   },
 ];
 
+/* Container stagger */
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+/* Card animation */
+const card = {
+  hidden: {
+    opacity: 0,
+    y: 60,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 90,
+      damping: 18,
+    },
+  },
+};
+
 const Services = () => {
-  useEffect(() => {
-    const elements = document.querySelectorAll(".fade-in");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting)
-            entry.target.classList.add("opacity-100", "translate-y-0");
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-  }, []);
-
   return (
-    <section className="min-h-screen bg-[#172C65] px-6 md:px-12 py-20 text-white pt-24 md:pt-16">
+    <section className="min-h-screen bg-[#172C65] px-6 md:px-12 py-24 text-white">
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 fade-in opacity-0 translate-y-6 transition-all duration-1000">
-        <h2 className="text-4xl md:text-5xl font-extrabold">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{
+          type: "spring",
+          stiffness: 80,
+          damping: 16,
+        }}
+        className="text-center max-w-3xl mx-auto mb-20"
+      >
+        <motion.h2
+          initial={{ scale: 0.9 }}
+          whileInView={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 120 }}
+          className="text-4xl md:text-5xl font-extrabold"
+        >
           My <span className="text-yellow-400">Services</span>
-        </h2>
-        <p className="mt-4 text-gray-300">
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mt-5 text-gray-300"
+        >
           I provide high-quality digital services focused on performance,
           usability and real business results.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
       {/* Services Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto"
+      >
         {services.map((item, index) => {
           const Icon = item.icon;
 
           return (
-            <div
+            <motion.div
               key={index}
-              className="fade-in opacity-0 translate-y-6 transition-all duration-1000
-              bg-slate-900/80 border border-blue-800 rounded-2xl p-8 text-center
-              hover:border-yellow-400 hover:-translate-y-2 hover:shadow-xl"
+              variants={card}
+              whileTap={{ scale: 0.93 }}
+              className="
+                bg-slate-900/80
+                border border-blue-800
+                rounded-2xl
+                p-8
+                text-center
+                relative
+                overflow-hidden
+              "
             >
+              {/* Glow overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                className="absolute inset-0 bg-gradient-to- from-yellow-400/10 to-transparent pointer-events-none"
+              />
+
               {/* Icon */}
-              <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center shadow-lg">
+              <div className="flex justify-center mb-6 relative z-10">
+                <motion.div
+                  animate={{
+                    boxShadow: [
+                      "0 0 0 rgba(250,204,21,0)",
+                      "0 0 25px rgba(250,204,21,0.6)",
+                      "0 0 0 rgba(250,204,21,0)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  whileTap={{ scale: 0.85, rotate: -10 }}
+                  className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center"
+                >
                   <Icon className="text-3xl text-yellow-400" />
-                </div>
+                </motion.div>
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold mb-3 text-white">
+              <motion.h3
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.15 }}
+                className="text-xl font-bold mb-3 text-white relative z-10"
+              >
                 {item.title}
-              </h3>
+              </motion.h3>
 
               {/* Description */}
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.25 }}
+                className="text-gray-300 text-sm leading-relaxed relative z-10"
+              >
                 {item.description}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -1,11 +1,12 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { ExternalLink, Github, Code, Monitor, Smartphone } from "lucide-react";
 
 const projects = [
-    {
+  {
     title: "Tourism Website",
     description:
-      "A modern tourism website designed to showcase destinations, travel packages and experiences with a visually engaging layout, smooth navigation and mobile first design for an excellent user experience.",
+      "A modern tourism website designed to showcase destinations, travel packages and experiences with a visually engaging layout, smooth navigation and mobile first design.",
     tech: ["React", "Tailwind"],
     live: "https://lolade-1.github.io/Tourism/",
     github: "#",
@@ -29,14 +30,49 @@ const projects = [
     github: "#",
     icon: <Smartphone className="w-6 h-6" />,
   },
-
 ];
+
+/* Container stagger */
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+/* Card animation */
+const card = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+    scale: 0.96,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 90,
+      damping: 18,
+    },
+  },
+};
 
 const Portfolio = () => {
   return (
-    <section className="min-h-screen bg-[#182E6C] text-white px-6 md:px-12 py-20 pt-24 md:pt-16">
+    <section className="min-h-screen bg-[#182E6C] text-white px-6 md:px-12 py-24">
       {/* Header */}
-      <div className="max-w-6xl mx-auto mb-16 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ type: "spring", stiffness: 80 }}
+        className="max-w-6xl mx-auto mb-16 text-center"
+      >
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
           My <span className="text-yellow-400">Portfolio</span>
         </h1>
@@ -44,35 +80,68 @@ const Portfolio = () => {
           A selection of projects showcasing clean design, solid functionality,
           and real-world problem solving.
         </p>
-      </div>
+      </motion.div>
 
       {/* Projects Grid */}
-      <div className="max-w-6xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="max-w-6xl mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-3"
+      >
         {projects.map((project, index) => (
-          <div
+          <motion.div
             key={index}
-            className="group bg-slate-900/80 border border-blue-800 rounded-2xl p-6
-            transition hover:-translate-y-2 hover:border-yellow-400 hover:shadow-xl"
+            variants={card}
+            whileHover={{
+              y: -8,
+              boxShadow: "0px 20px 40px rgba(0,0,0,0.35)",
+            }}
+            whileTap={{ scale: 0.94 }}
+            className="relative bg-slate-900/80 border border-blue-800 rounded-2xl p-6 overflow-hidden"
           >
+            {/* Glow overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 1 }}
+              className="absolute inset-0 bg-gradient-to- from-yellow-400/10 to-transparent pointer-events-none"
+            />
+
             {/* Icon */}
-            <div className="mb-5">
-              <div className="inline-flex p-3 rounded-xl bg-blue-600 text-yellow-400 shadow-md">
+            <div className="mb-5 relative z-10">
+              <motion.div
+                whileTap={{ scale: 0.85, rotate: -8 }}
+                animate={{
+                  boxShadow: [
+                    "0 0 0 rgba(250,204,21,0)",
+                    "0 0 18px rgba(250,204,21,0.5)",
+                    "0 0 0 rgba(250,204,21,0)",
+                  ],
+                }}
+                transition={{
+                  duration: 2.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="inline-flex p-3 rounded-xl bg-blue-600 text-yellow-400 shadow-md"
+              >
                 {project.icon}
-              </div>
+              </motion.div>
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold mb-2 group-hover:text-yellow-400 transition">
+            <h3 className="text-xl font-semibold mb-2 relative z-10">
               {project.title}
             </h3>
 
             {/* Description */}
-            <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+            <p className="text-gray-300 text-sm mb-4 leading-relaxed relative z-10">
               {project.description}
             </p>
 
             {/* Tech Stack */}
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 mb-6 relative z-10">
               {project.tech.map((item, i) => (
                 <span
                   key={i}
@@ -84,41 +153,48 @@ const Portfolio = () => {
             </div>
 
             {/* Links */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 relative z-10">
               <a
                 href={project.live}
                 target="_blank"
-                className="flex items-center gap-2 text-sm text-yellow-400 hover:underline"
+                className="flex items-center gap-2 text-sm text-yellow-400"
               >
                 Live Demo <ExternalLink size={16} />
               </a>
               <a
                 href={project.github}
                 target="_blank"
-                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+                className="flex items-center gap-2 text-sm text-gray-400"
               >
                 Code <Github size={16} />
               </a>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* CTA */}
-      <div className="max-w-4xl mx-auto mt-24 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ type: "spring", stiffness: 70 }}
+        className="max-w-4xl mx-auto mt-24 text-center"
+      >
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
           Have a project in mind?
         </h2>
         <p className="text-gray-300 mb-8">
-          I’m open to freelance work, collaborations and exciting ideas.
+          I’m open to freelance work, remote work, collaborations and exciting ideas.
         </p>
-        <a
+        <motion.a
+          whileTap={{ scale: 0.95 }}
           href="/contact"
-          className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 rounded-full font-semibold transition"
+          className="inline-block bg-blue-600 text-white px-10 py-3 rounded-full font-semibold"
         >
           Contact Me
-        </a>
-      </div>
+        </motion.a>
+      </motion.div>
     </section>
   );
 };

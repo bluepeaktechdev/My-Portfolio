@@ -64,7 +64,7 @@ export default function Contact() {
           {/* Email */}
           <div>
             <label className="block mb-2 text-sm text-gray-300">Email Address</label>
-            <input type="email" placeholder="example@mail.com" required className="contact-input" />
+            <input type="email" placeholder="yourname@gmail.com" required className="contact-input" />
           </div>
 
           {/* Message */}
